@@ -106,7 +106,7 @@ def get_job():
 
 
 @app.route("/api/v1/get_job_log", methods=['POST'])
-def get_cmd_log():
+def get_job_log():
     src = request.form.get("src")
     if not src:
         return {

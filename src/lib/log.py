@@ -1,7 +1,7 @@
 import logging.config
 import os
 
-from src.lib.dir import PROJECT_ABSOLUTE_PATH
+from dir import PROJECT_ABSOLUTE_PATH
 
 
 class Loggers:

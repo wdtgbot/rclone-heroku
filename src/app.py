@@ -5,8 +5,8 @@ from flask import Flask
 from flask import request
 from sentry_sdk.integrations.flask import FlaskIntegration
 
-from src.lib.dir import PROJECT_ABSOLUTE_PATH
-from src.lib.rclone import Rclone
+from lib.dir import PROJECT_ABSOLUTE_PATH
+from lib.rclone import Rclone
 
 if os.getenv("sentry_dsn"):
     print("sentry_dsn")

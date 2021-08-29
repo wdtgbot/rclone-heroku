@@ -105,6 +105,16 @@ def get_job():
         }
 
 
+@app.route("/api/v1/get_cmd_log")
+def get_cmd_log():
+    with open("/root/rclone.log", "a+") as fn:
+        msg = fn.read()
+    return {
+        "code": 200,
+        "msg": msg
+    }
+
+
 if __name__ == '__main__':
     if os.getenv("sentry_dsn"):
         print("sentry_dsn")

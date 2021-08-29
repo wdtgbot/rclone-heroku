@@ -1,12 +1,14 @@
 import os
 
+import sentry_sdk
 from flask import Flask
 from flask import request
-
+from sentry_sdk.integrations.flask import FlaskIntegration
 
 from lib.dir import PROJECT_ABSOLUTE_PATH
 from lib.rclone import Rclone
 
+PORT = os.getenv("PORT")
 
 app = Flask(__name__)
 
@@ -102,3 +104,13 @@ def get_job():
             "msg": "job not found."
         }
 
+
+if __name__ == '__main__':
+    if os.getenv("sentry_dsn"):
+        print("sentry_dsn")
+        sentry_sdk.init(
+            dsn=os.getenv("sentry_dsn"),
+            integrations=[FlaskIntegration()],
+            traces_sample_rate=1.0
+        )
+    app.run("0.0.0.0", PORT)

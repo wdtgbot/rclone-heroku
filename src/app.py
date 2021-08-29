@@ -105,14 +105,49 @@ def get_job():
         }
 
 
+@app.route("/api/v1/get_job_log", methods=['POST'])
+def get_cmd_log():
+    src = request.form.get("src")
+    if not src:
+        return {
+            "code": 400,
+            "msg": "Src not found."
+        }
+    dst = request.form.get("dst")
+    if not dst:
+        return {
+            "code": 400,
+            "msg": "dst not found."
+        }
+
+    r = Rclone()
+    tf, msg = r.get_job_logfile(src=src, dst=dst)
+    if tf:
+        return {
+            "code": 200,
+            "msg": msg
+        }
+    else:
+        return {
+            "code": 400,
+            "msg": "file not found."
+        }
+
+
 @app.route("/api/v1/get_cmd_log")
 def get_cmd_log():
-    with open("/root/rclone.log", "a+") as fn:
-        msg = fn.read()
-    return {
-        "code": 200,
-        "msg": msg
-    }
+    if os.path.exists("/root/rclone.log"):
+        with open("/root/rclone.log", "a+") as fn:
+            msg = fn.read()
+        return {
+            "code": 200,
+            "msg": msg
+        }
+    else:
+        return {
+            "code": 400,
+            "msg": "file not found."
+        }
 
 
 if __name__ == '__main__':

@@ -66,6 +66,16 @@ class Rclone:
         else:
             return False, None
 
+    def get_job_logfile(self, src, dst) -> (bool, str):
+        logfile_name = get_md5_str(src + dst) + ".log"
+        logfile_path = os.path.join(self.rclone_logfile_dir, logfile_name)
+        if os.path.exists(logfile_path):
+            with open(logfile_path, "a+") as fn:
+                msg = fn.read()
+            return True, msg
+        else:
+            return False, None
+
     def check_rclone_installed(self) -> bool:
         """
         判断是否安装rclone

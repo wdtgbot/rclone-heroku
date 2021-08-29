@@ -45,26 +45,11 @@ class Rclone:
                 'finish': 0
             }
             with open(logfile_path) as fn:
-                print("-"*30)
                 for x in fn:
-                    print(fn)
                     if 'go routines active' in x:
-                        infos['ts'] = infos['tts']
-                        infos['percentage'] = '100%'
-                        infos['speed'] = '0/s'
-                        infos['eta'] = '0s'
                         infos['finish'] = 1
-                    if 'info' in x:
-                        msgs = x.split(' ')
-                        try:
-                            infos['ts'] = msgs[5]
-                            infos['tts'] = msgs[7] + msgs[8]
-                            infos['percentage'] = msgs[9]
-                            infos['speed'] = msgs[10] + msgs[11]
-                            infos['eta'] = msgs[13].replace('\\nErrors:', '')
-                        except:
-                            pass
-                print("-" * 30)
+                    if 'info' in x and 'nTransferred' in x:
+                        infos["status"] = x
                 return True, infos
         else:
             return False, None

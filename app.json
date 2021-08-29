@@ -1,0 +1,13 @@
+{
+  "name": "remote-rclone",
+  "repository": "[https://github.com/...]",
+  "env": {
+    "sentry_dsn": {
+      "description": "sentry_dsn",
+      "value": "sentry_dsn"
+    }
+  },
+  "website": "https://example.com",
+  "stack": "container"
+}
+    

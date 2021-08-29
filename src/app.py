@@ -1,20 +1,12 @@
 import os
 
-import sentry_sdk
 from flask import Flask
 from flask import request
-from sentry_sdk.integrations.flask import FlaskIntegration
+
 
 from lib.dir import PROJECT_ABSOLUTE_PATH
 from lib.rclone import Rclone
 
-if os.getenv("sentry_dsn"):
-    print("sentry_dsn")
-    sentry_sdk.init(
-        dsn=os.getenv("sentry_dsn"),
-        integrations=[FlaskIntegration()],
-        traces_sample_rate=1.0
-    )
 
 app = Flask(__name__)
 

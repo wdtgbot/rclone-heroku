@@ -18,6 +18,57 @@ def hello_world():
     return "<p>Hello, World!</p>"
 
 
+@app.route("/api/v1/log/debug")
+def get_log_debug():
+    file_path = os.path.join(PROJECT_ABSOLUTE_PATH, "log", "debug.log")
+    if os.path.exists(file_path):
+        with open(file_path, 'r') as fn:
+            msg = fn.read()
+        return {
+            "code": 200,
+            "msg": msg
+        }
+    else:
+        return {
+            "code": 400,
+            "msg": "debug.log not found."
+        }
+
+
+@app.route("/api/v1/log/info")
+def get_log_info():
+    file_path = os.path.join(PROJECT_ABSOLUTE_PATH, "log", "info.log")
+    if os.path.exists(file_path):
+        with open(file_path, 'r') as fn:
+            msg = fn.read()
+        return {
+            "code": 200,
+            "msg": msg
+        }
+    else:
+        return {
+            "code": 400,
+            "msg": "info.log not found."
+        }
+
+
+@app.route("/api/v1/log/error")
+def get_log_error():
+    file_path = os.path.join(PROJECT_ABSOLUTE_PATH, "log", "error.log")
+    if os.path.exists(file_path):
+        with open(file_path, 'r') as fn:
+            msg = fn.read()
+        return {
+            "code": 200,
+            "msg": msg
+        }
+    else:
+        return {
+            "code": 400,
+            "msg": "error.log not found."
+        }
+
+
 @app.route("/api/v1/add_config", methods=['POST'])
 def add_config():
     config = request.form.get("config")

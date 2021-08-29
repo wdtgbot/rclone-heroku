@@ -5,9 +5,9 @@ import zipfile
 
 import requests
 
-from dir import PROJECT_ABSOLUTE_PATH
-from log import Loggers
-from md5 import get_md5_str
+from lib.dir import PROJECT_ABSOLUTE_PATH
+from lib.log import Loggers
+from lib.md5 import get_md5_str
 
 
 class Rclone:

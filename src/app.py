@@ -26,7 +26,8 @@ def add_config():
     with open(os.path.join(PROJECT_ABSOLUTE_PATH, "rclone.conf"), "a+") as fn:
         fn.write(config)
     return {
-        "code": 200
+        "code": 200,
+        "msg": "config file add succeed."
     }
 
 
@@ -36,7 +37,8 @@ def install_rclone():
     tf = r.install_rclone()
     if tf:
         return {
-            "code": 200
+            "code": 200,
+            "msg": "rclone install succeed."
         }
     else:
         return {
@@ -65,7 +67,8 @@ def run_job():
         if tf:
             r.job_copy(src, dst)
             return {
-                "code": 200
+                "code": 200,
+                "msg": "Run job succeed."
             }
     else:
         r.job_copy(src, dst)

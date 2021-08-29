@@ -45,7 +45,9 @@ class Rclone:
                 'finish': 0
             }
             with open(logfile_path) as fn:
+                print("-"*30)
                 for x in fn:
+                    print(fn)
                     if 'go routines active' in x:
                         infos['ts'] = infos['tts']
                         infos['percentage'] = '100%'
@@ -62,6 +64,7 @@ class Rclone:
                             infos['eta'] = msgs[13].replace('\\nErrors:', '')
                         except:
                             pass
+                print("-" * 30)
                 return True, infos
         else:
             return False, None
@@ -70,7 +73,7 @@ class Rclone:
         logfile_name = get_md5_str(src + dst) + ".log"
         logfile_path = os.path.join(self.rclone_logfile_dir, logfile_name)
         if os.path.exists(logfile_path):
-            with open(logfile_path, "a+") as fn:
+            with open(logfile_path, "r") as fn:
                 msg = fn.read()
             return True, msg
         else:

@@ -20,13 +20,14 @@ class Rclone:
             os.makedirs(self.rclone_logfile_dir)
             Loggers().get_logger("info").info(
                 "创建rclone临时日志目录: {rclone_logfile_dir}".format(rclone_logfile_dir=self.rclone_logfile_dir))
-        # cmd = 'screen -dmS {screen_id} {rclone_bin} copy --use-json-log -vv --stats 10s --ignore-existing --log-file={log_file_path} {src} {dst}'.format(
-        #     screen_id=get_md5_str(src + dst), rclone_bin=self.rclone_bin_path,
-        #     log_file_path=os.path.join(self.rclone_logfile_dir, get_md5_str(src + dst) + ".log"), src=src, dst=dst)
+        log_file_path = os.path.join(self.rclone_logfile_dir, get_md5_str(src + dst) + ".log")
+        if os.path.exists(log_file_path):
+            os.remove(log_file_path)
+            Loggers().get_logger("info").info("删除原任务: {src}  {dst}".format(src=src, dst=dst))
 
         cmd = 'nohup {rclone_bin} copy --config={config_file_path} --use-json-log -vv --stats 10s --ignore-existing --log-file={log_file_path} {src} {dst} > /rclone.log 2>&1 &'.format(
-            config_file_path=os.path.join(PROJECT_ABSOLUTE_PATH,"rclone.conf"), rclone_bin=self.rclone_bin_path,
-            log_file_path=os.path.join(self.rclone_logfile_dir, get_md5_str(src + dst) + ".log"), src=src, dst=dst)
+            config_file_path=os.path.join(PROJECT_ABSOLUTE_PATH, "rclone.conf"), rclone_bin=self.rclone_bin_path,
+            log_file_path=log_file_path, src=src, dst=dst)
 
         subprocess.Popen(cmd, shell=True)
 

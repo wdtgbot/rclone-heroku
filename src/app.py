@@ -72,6 +72,11 @@ def get_log_error():
 @app.route("/api/v1/add_config", methods=['POST'])
 def add_config():
     config = request.form.get("config")
+    if not config:
+        return {
+            "code": 400,
+            "msg": "Config not found."
+        }
     if os.path.exists(os.path.join(PROJECT_ABSOLUTE_PATH, "rclone.conf")):
         os.remove(os.path.join(PROJECT_ABSOLUTE_PATH, "rclone.conf"))
     with open(os.path.join(PROJECT_ABSOLUTE_PATH, "rclone.conf"), "a+") as fn:
@@ -93,7 +98,8 @@ def install_rclone():
         }
     else:
         return {
-            "code": 400
+            "code": 400,
+            "msg": "rclone install failed."
         }
 
 
@@ -145,6 +151,7 @@ def get_job():
         }
     s = {
         "code": 200,
+        "msg": ""
     }
     r = Rclone()
     tf, infos_dict = r.get_job_info(src=src, dst=dst)
